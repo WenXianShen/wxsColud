@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxs.oauth.dao.UserMapper">
+    <select id="getUserByNameAndPwd"
+            resultType="wxs.common.vo.user.UserResVo" parameterType="wxs.common.vo.user.UserReqVo">
+      SELECT id,user_account account,passwd password,user_name_zh ,gender FROM `t_user`  where user_account=#{account}
+    </select>
+
+    <select id="getUserListByVo"
+            resultType="wxs.common.vo.user.UserResVo" parameterType="wxs.common.vo.user.UserReqVo">
+      SELECT id,user_account account,passwd password,user_name_zh ,gender,image_url ,telephone ,gender,mobile,mail,address FROM `t_user` where is_deleted=2
+        <if test="name!=null">
+
+        </if>
+    </select>
+</mapper>
