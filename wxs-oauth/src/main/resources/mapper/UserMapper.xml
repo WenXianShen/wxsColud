@@ -3,12 +3,12 @@
 <mapper namespace="wxs.oauth.dao.UserMapper">
     <select id="getUserByNameAndPwd"
             resultType="wxs.common.vo.user.UserResVo" parameterType="wxs.common.vo.user.UserReqVo">
-      SELECT id,user_account account,passwd password,user_name_zh ,gender FROM `t_user`  where user_account=#{account}
+      SELECT id,user_account account,passwd password,user_name_zh name,gender FROM `t_user`  where user_account=#{account}
     </select>
 
     <select id="getUserListByVo"
             resultType="wxs.common.vo.user.UserResVo" parameterType="wxs.common.vo.user.UserReqVo">
-      SELECT id,user_account account,passwd password,user_name_zh ,gender,image_url ,telephone ,gender,mobile,mail,address FROM `t_user` where is_deleted=2
+      SELECT id,user_account account,passwd password,user_name_zh name,gender,image_url ,telephone ,gender,mobile,mail,address FROM `t_user` where is_deleted=2
         <if test="name!=null">
 
         </if>
