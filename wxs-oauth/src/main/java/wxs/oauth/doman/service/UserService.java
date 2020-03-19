@@ -1,4 +1,4 @@
-package wxs.oauth.service;
+package wxs.oauth.doman.service;
 import com.github.pagehelper.PageInfo;
 import wxs.common.vo.user.UserReqVo;
 import wxs.common.vo.user.UserResVo;

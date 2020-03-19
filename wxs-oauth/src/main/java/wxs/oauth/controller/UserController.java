@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wxs.common.response.AppResult;
 import wxs.common.response.Result;
 import wxs.common.vo.user.UserReqVo;
-import wxs.oauth.service.UserService;
+import wxs.oauth.doman.service.UserService;
 
 /**
  * @author : imperater

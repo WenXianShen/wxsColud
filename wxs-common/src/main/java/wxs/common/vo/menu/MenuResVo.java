@@ -1,25 +1,113 @@
 package wxs.common.vo.menu;
 
 import lombok.Data;
+import wxs.common.com.BasePagerVo;
+import wxs.common.com.BaseVo;
+
+import java.util.List;
 
 /**
  * @author : imperater
  * @date : 2020/1/16
  */
-@Data
-public class MenuResVo {
+public class MenuResVo extends BaseVo {
     // 菜单名称
-    private String menuName;
+    private String name;
 
     // 菜单级别
     private String lvl;
 
     // 路径
-    private String menuPath;
+    private String text;
 
     // 父菜单ID
     private Long parentId;
 
     // 显示顺序
     private Long displaySeq;
+    //是否显示
+    private  String isHidden;
+
+    //菜单icon
+    private  String type;
+
+    public List<MenuResVo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<MenuResVo> children) {
+        this.children = children;
+    }
+
+    private  Boolean hidden;
+    public List<MenuResVo> children;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(String lvl) {
+        this.lvl = lvl;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Long getDisplaySeq() {
+        return displaySeq;
+    }
+
+    public void setDisplaySeq(Long displaySeq) {
+        this.displaySeq = displaySeq;
+    }
+
+    public String getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(String isHidden) {
+        if("0".equals(isHidden)){
+            this.hidden=false;
+        }else if("1".equals(isHidden)){
+            this.hidden=true;
+        }
+        this.isHidden = isHidden;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
 }

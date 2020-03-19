@@ -40,6 +40,7 @@ public class SessionInterceptor  implements HandlerInterceptor {
         log.info("正在访问的url:{}",request.getRequestURL());
         log.info("token为:{}",token);
 
+        log.info(request.getServletPath());
 
         //普通路径放行
         if ( "/WebLogin/login.do".equals(request.getServletPath())) {

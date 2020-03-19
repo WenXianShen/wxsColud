@@ -1,4 +1,4 @@
-package wxs.oauth.service.impl;
+package wxs.oauth.doman.service.impl;
 
 
 import com.github.pagehelper.*;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wxs.common.vo.user.UserReqVo;
 import wxs.common.vo.user.UserResVo;
-import wxs.oauth.dao.UserMapper;
-import wxs.oauth.service.UserService;
+import wxs.oauth.doman.dao.UserMapper;
+import wxs.oauth.doman.service.UserService;
 
 import java.util.List;
 

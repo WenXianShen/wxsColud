@@ -1,11 +1,15 @@
 package wxs.common.po;
 
+import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import wxs.common.com.BaseVo;
 
 import java.util.Date;
 
 @Data
+@TableName("t_user")
+@AllArgsConstructor
 public class UserPo extends BaseVo {
     private String account;
     private String password;
@@ -32,7 +36,6 @@ public class UserPo extends BaseVo {
     private Date birthday;
     private String idcard;
     private String address;
-
-
+    private String userType;
 
 }

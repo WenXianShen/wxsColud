@@ -1,6 +1,8 @@
 package wxs.common.vo.user;
 
 import lombok.Data;
+import wxs.common.com.BasePagerVo;
+import wxs.common.com.BaseVo;
 
 import java.util.Date;
 
@@ -9,8 +11,7 @@ import java.util.Date;
  * @date : 2020/1/14
  */
 @Data
-public class UserResVo {
-        private String id;
+public class UserResVo extends BasePagerVo {
         private String account;
         private String password;
         private String name;
@@ -23,4 +24,5 @@ public class UserResVo {
         private Date birthday;
         private String idcard;
         private String address;
+        private String userType;
 }

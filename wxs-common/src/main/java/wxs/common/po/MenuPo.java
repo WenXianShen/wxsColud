@@ -1,5 +1,6 @@
-package wxs.oauth.po;
+package wxs.common.po;
 
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import wxs.common.com.BaseVo;
@@ -10,6 +11,7 @@ import wxs.common.com.BaseVo;
  */
 @Data
 @AllArgsConstructor
+@TableName("t_menu")
 public class MenuPo extends BaseVo {
     // 菜单名称
     private String menuName;
@@ -18,11 +20,18 @@ public class MenuPo extends BaseVo {
     private String lvl;
 
     // 路径
-    private String menuPath;
+    private String routerPath;
 
     // 父菜单ID
     private Long parentId;
 
     // 显示顺序
     private Long displaySeq;
+
+    //是否显示
+    private  String isHidden;
+
+    //菜单icon
+    private  String type;
+
 }

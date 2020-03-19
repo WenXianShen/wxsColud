@@ -1,13 +1,14 @@
 package wxs.common.vo.menu;
 
 import lombok.Data;
+import wxs.common.com.BasePagerVo;
 
 /**
  * @author : imperater
  * @date : 2020/1/16
  */
 @Data
-public class MenuReqVo {
+public class MenuReqVo extends BasePagerVo {
     // 菜单名称
     private String menuName;
 
