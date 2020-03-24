@@ -1,6 +1,8 @@
 
 package wxs.common.com;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +12,7 @@ import java.io.Serializable;
 
  * @version 1.0.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Pagination implements Serializable {
 
     /**

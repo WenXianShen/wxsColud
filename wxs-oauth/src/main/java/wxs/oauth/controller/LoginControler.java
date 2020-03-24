@@ -3,30 +3,26 @@ package wxs.oauth.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.util.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import wxs.common.util.RedisHelper;
 import wxs.common.vo.menu.MenuResVo;
 import wxs.common.vo.user.UserReqVo;
 import wxs.common.vo.user.UserResVo;
 import wxs.oauth.doman.service.MenuService;
-import wxs.oauth.interceptor.SessionInterceptor;
 import wxs.common.response.AppResult;
 import wxs.common.response.Result;
 import wxs.oauth.doman.service.UserService;
+import wxs.oauth.interceptor.SessionInterceptor;
 import wxs.oauth.util.TokenUtil;
 
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : imperater
@@ -36,6 +32,9 @@ import java.util.Map;
 @RequestMapping("/WebLogin")
 @Slf4j
 public class LoginControler {
+
+    @Autowired
+    private RedisHelper redisHelper;
 
     /**
      * 用户登录
@@ -60,9 +59,12 @@ public class LoginControler {
                 if (users.getPassword().equals(user.getPassword())) {
                     JSONObject JSON=new JSONObject();
                     //先添加到session
-                    request.getSession().setAttribute("user", users);
-                    request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
-                    SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
+                   // request.getSession().setAttribute("user", users);
+                   // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
+                    String token=TokenUtil.getToken().makeToken();
+                    redisHelper.set(token,users);
+                    redisHelper.set(users.getId().toString(),token);
+                    //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
                     JSON.put("user",users);
                     UserReqVo reqVo = new UserReqVo();
                     reqVo.setId(users.getId());
@@ -70,7 +72,7 @@ public class LoginControler {
                     List<MenuResVo> menuList = menuService.getUserMenuList(reqVo);
                  /*  String json="[{ text: '基础设置',type: 'ios-paper',children: [{ type: 'ios-grid',name: 'userManage',text: '用户管理',},{ type: 'ios-grid',name: 'userAdd',text: '新增用户',hidden:true}{ type: 'ios-grid',name: 'menuManage',text: '菜单管理'}]}]";
                        JSON.put("menuList",JSONObject.parseArray(json));*/
-                    JSON.put("token", request.getSession().getAttribute("token"));
+                    JSON.put("token",token);
                     //这里将菜单列表组装成树
                     JSON.put("menuList",menuTree(menuList));
 

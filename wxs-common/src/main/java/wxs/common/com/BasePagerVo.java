@@ -1,5 +1,6 @@
 package wxs.common.com;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 /**

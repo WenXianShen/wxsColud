@@ -1,5 +1,6 @@
 package wxs.common.vo.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import wxs.common.com.BasePagerVo;
 import wxs.common.com.BaseVo;
