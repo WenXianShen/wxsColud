@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 
+@ComponentScan(basePackages ="wxs")
 @SpringBootApplication
 public class WxsOauthApplication {
 

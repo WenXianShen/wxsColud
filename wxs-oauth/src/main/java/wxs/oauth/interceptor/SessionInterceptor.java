@@ -55,7 +55,7 @@ public class SessionInterceptor  implements HandlerInterceptor {
         /**
          * 这里当前只验证是否携带token，后期还有判断token是否正确
          */
-        if(token == "" || token == null){
+        if(token == "" || token == null) {
             ((HttpServletResponse) response).setHeader("content-type", "text/html;charset=UTF-8");
             response.getWriter().write("{\"status\":0,\"message\":\"请登录！\",\"result\":null}");
             return false;
@@ -82,8 +82,6 @@ public class SessionInterceptor  implements HandlerInterceptor {
         }else{
             ((HttpServletResponse) response).setHeader("content-type", "text/html;charset=UTF-8");
             response.getWriter().write("{\"status\":0,\"message\":\"登录已失效！\",\"result\":null}");
-            //将token移除掉
-            redisHelper.del(token);
             return false;
         }
     }

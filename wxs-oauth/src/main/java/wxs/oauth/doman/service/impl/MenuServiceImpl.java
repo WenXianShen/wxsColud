@@ -1,10 +1,12 @@
 package wxs.oauth.doman.service.impl;
 
 
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import wxs.common.vo.menu.MenuReqVo;
 import wxs.common.vo.menu.MenuResVo;
 import wxs.common.vo.user.UserReqVo;
 import wxs.common.vo.user.UserResVo;
@@ -23,6 +25,14 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
+
+    @Override
+    public PageInfo getMenuList(MenuReqVo vo) {
+        PageHelper.startPage(vo.getPager().getCurrentPage(),vo.getPager().getPagesize());
+        List<MenuResVo> menuList = menuMapper.getMenuList(vo);
+        PageInfo pageInfo = new PageInfo(menuList);
+        return pageInfo;
+    }
 
     @Override
     public List<MenuResVo> getUserMenuList(UserReqVo vo) {

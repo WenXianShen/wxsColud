@@ -23,14 +23,28 @@ import wxs.oauth.doman.service.UserService;
 public class UserController {
     @Autowired
     private UserService userService;
+
     //查询所有用户列表
     @RequestMapping(value="/getUserList")
     @ResponseBody
     public AppResult getUserListByVo(@RequestBody UserReqVo userVo){
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         PageInfo pageInfo=userService.getUserListByVo(userVo);
         jsonObject.put("totolCount",pageInfo.getTotal());
         jsonObject.put("list",pageInfo.getList());
         return Result.success(jsonObject);
+    }
+
+
+    //查询所有用户列表
+    @RequestMapping(value="/insertUser")
+    @ResponseBody
+    public AppResult insertUser(@RequestBody UserReqVo userVo){
+        try{
+            userService.saveUser(userVo);
+        }catch (Exception e){
+            return Result.failed("添加失败");
+        }
+        return Result.success("添加成功");
     }
 }

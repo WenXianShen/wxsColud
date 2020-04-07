@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import wxs.oauth.interceptor.SessionInterceptor;
 
-@Configuration
+/*@Configuration*/
 // web配置文件（web.xml）添加一个拦截器
 public class SessionConfiguration implements WebMvcConfigurer   {
 

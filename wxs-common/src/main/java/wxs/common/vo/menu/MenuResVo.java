@@ -20,8 +20,11 @@ public class MenuResVo extends BaseVo {
     // 路径
     private String text;
 
+
+
     // 父菜单ID
     private Long parentId;
+    private String parentName;
 
     // 显示顺序
     private Long displaySeq;
@@ -109,5 +112,12 @@ public class MenuResVo extends BaseVo {
 
     public void setHidden(Boolean hidden) {
         this.hidden = hidden;
+    }
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 }

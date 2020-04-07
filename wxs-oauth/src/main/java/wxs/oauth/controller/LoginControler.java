@@ -36,6 +36,7 @@ public class LoginControler {
     @Autowired
     private RedisHelper redisHelper;
 
+    private  long time=60*60*24;
     /**
      * 用户登录
      * @param user
@@ -58,24 +59,25 @@ public class LoginControler {
             if (users!=null && users.getAccount().equals(user.getAccount())) {
                 if (users.getPassword().equals(user.getPassword())) {
                     JSONObject JSON=new JSONObject();
-                    //先添加到session
-                   // request.getSession().setAttribute("user", users);
-                   // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
-                    String token=TokenUtil.getToken().makeToken();
-                    redisHelper.set(token,users);
-                    redisHelper.set(users.getId().toString(),token);
-                    //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
-                    JSON.put("user",users);
-                    UserReqVo reqVo = new UserReqVo();
-                    reqVo.setId(users.getId());
-                    //根据用户id对应的角色，获取菜单列表
-                    List<MenuResVo> menuList = menuService.getUserMenuList(reqVo);
+                    if("0".equals(user.getUserType())){
+                        //先添加到session
+                        // request.getSession().setAttribute("user", users);
+                        // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
+                        String token=TokenUtil.getToken().makeToken();
+                        redisHelper.set(token,users,time);
+                        redisHelper.set(users.getId().toString(),token,time);
+                        //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
+                        JSON.put("user",users);
+                        UserReqVo reqVo = new UserReqVo();
+                        reqVo.setId(users.getId());
+                        //根据用户id对应的角色，获取菜单列表
+                        List<MenuResVo> menuList = menuService.getUserMenuList(reqVo);
                  /*  String json="[{ text: '基础设置',type: 'ios-paper',children: [{ type: 'ios-grid',name: 'userManage',text: '用户管理',},{ type: 'ios-grid',name: 'userAdd',text: '新增用户',hidden:true}{ type: 'ios-grid',name: 'menuManage',text: '菜单管理'}]}]";
                        JSON.put("menuList",JSONObject.parseArray(json));*/
-                    JSON.put("token",token);
-                    //这里将菜单列表组装成树
-                    JSON.put("menuList",menuTree(menuList));
-
+                        JSON.put("token",token);
+                        //这里将菜单列表组装成树
+                        JSON.put("menuList",menuTree(menuList));
+                    }
                  return Result.success(JSON);
                 }
                 return Result.failed( "密码错误");

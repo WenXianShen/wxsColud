@@ -4,6 +4,7 @@ package wxs.common.util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -135,6 +137,9 @@ public class RedisHelper {
 
         return "OK".equalsIgnoreCase(status);
     }
+
+
+
     /**
      * 分布式竞争锁机制
      *

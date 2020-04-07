@@ -12,6 +12,9 @@
             resultType="wxs.common.vo.user.UserResVo" parameterType="wxs.common.vo.user.UserReqVo">
       SELECT id,user_account account,passwd password,user_name_zh name,gender,image_url ,telephone ,gender,mobile,mail,address
       FROM `t_user` where is_deleted = 2 and user_type = #{userType}
+      <if test="name != null ">
+        AND user_name_zh  like concat(#{name},'%')
+      </if>
     </select>
 
 </mapper>

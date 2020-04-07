@@ -3,14 +3,14 @@ package wxs.common.po;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import wxs.common.com.BasePo;
 import wxs.common.com.BaseVo;
 
 import java.util.Date;
 
 @Data
 @TableName("t_user")
-@AllArgsConstructor
-public class UserPo extends BaseVo {
+public class UserPo extends BasePo {
     private String account;
     private String password;
     private String userNameZh;
