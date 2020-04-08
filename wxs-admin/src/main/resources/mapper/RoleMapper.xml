@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxs.admin.doman.dao.RoleMapper">
+    <select id="getRoleList" resultType="wxs.admin.vo.role.RoleResVo" parameterType="wxs.admin.vo.role.RoleReqVo">
+                SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
+    </select>
+
+</mapper>

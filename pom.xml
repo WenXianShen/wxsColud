@@ -21,6 +21,7 @@
   <modules>
     <module>wxs-oauth</module>
     <module>wxs-common</module>
+    <module>wxs-admin</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

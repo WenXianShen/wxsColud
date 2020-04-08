@@ -1,6 +1,5 @@
 package wxs.oauth.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import wxs.admin.doman.service.MenuService;
+import wxs.admin.doman.service.UserService;
+import wxs.admin.vo.menu.MenuResVo;
+import wxs.admin.vo.user.UserReqVo;
+import wxs.admin.vo.user.UserResVo;
 import wxs.common.util.RedisHelper;
-import wxs.common.vo.menu.MenuResVo;
-import wxs.common.vo.user.UserReqVo;
-import wxs.common.vo.user.UserResVo;
-import wxs.oauth.doman.service.MenuService;
 import wxs.common.response.AppResult;
 import wxs.common.response.Result;
-import wxs.oauth.doman.service.UserService;
-import wxs.oauth.interceptor.SessionInterceptor;
 import wxs.oauth.util.TokenUtil;
-
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +32,11 @@ public class LoginControler {
     @Autowired
     private RedisHelper redisHelper;
 
-    private  long time=60*60*24;
+    /**
+     * token过期时间
+     */
+    private long time = 60*60*24;
+
     /**
      * 用户登录
      * @param user
@@ -53,7 +53,6 @@ public class LoginControler {
     @RequestMapping(value="/login.do")
     @ResponseBody
     public AppResult loginDo(UserReqVo user , HttpServletRequest request, BindingResult bindingResult) {
-
         if (!bindingResult.hasErrors()) {//表示验证通过
             UserResVo users = userService.getUserByNameAndPwd(user);
             if (users!=null && users.getAccount().equals(user.getAccount())) {
@@ -80,7 +79,7 @@ public class LoginControler {
                     }
                  return Result.success(JSON);
                 }
-                return Result.failed( "密码错误");
+                return Result.failed("密码错误");
             }
             return Result.failed( "账号不存在");
         }else {
