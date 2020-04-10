@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import wxs.admin.doman.po.UserPo;
 import wxs.admin.vo.user.UserReqVo;
 import wxs.admin.vo.user.UserResVo;
+import wxs.common.vo.UserLoginResVo;
 
 
 import java.util.List;
@@ -17,6 +18,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper  extends BaseMapper<UserPo> {
-    public UserResVo getUserByNameAndPwd(UserReqVo user);
+    public UserLoginResVo getUserByNameAndPwd(UserReqVo user);
     public List<UserResVo> getUserListByVo(UserReqVo user);
 }

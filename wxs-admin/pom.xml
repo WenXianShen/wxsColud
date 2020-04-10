@@ -7,21 +7,35 @@
         <artifactId>wxs.cloud</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>wxs-oauth</groupId>
-    <artifactId>wxs-oauth</artifactId>
+    <groupId>wxs-admin</groupId>
+    <artifactId>wxs-admin</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>wxs-oauth</name>
-    <description>Demo project for Spring Boot</description>
+    <name>wxs-admin</name>
+    <description>wxs.admin</description>
+    <packaging>war</packaging>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
+
     <dependencies>
         <dependency>
-            <groupId>wxs-common</groupId>
-            <artifactId>wxs-common</artifactId>
+            <groupId>wxs-oauth</groupId>
+            <artifactId>wxs-oauth</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -30,12 +44,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--该标签解决别的模块打包时，找不到oauth模块中的拦截器，原因是spring boot有两种jar包，一种是可运行jar，一种是普通jar包   -->
-              <configuration>
-                   <classifier>exec</classifier>
-               </configuration>
             </plugin>
-          <!--  <plugin>
+           <!-- <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker.maven.plugin.version}</version>
@@ -64,6 +74,7 @@
                 </configuration>
             </plugin>-->
         </plugins>
-       <!-- <finalName>${project.artifactId}</finalName>-->
+      <!--  <finalName>${project.artifactId}</finalName>-->
     </build>
+
 </project>

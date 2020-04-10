@@ -1,4 +1,4 @@
-package wxs.oauth.controller;
+package wxs.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -11,12 +11,15 @@ import wxs.admin.doman.service.MenuService;
 import wxs.admin.doman.service.UserService;
 import wxs.admin.vo.menu.MenuResVo;
 import wxs.admin.vo.user.UserReqVo;
-import wxs.admin.vo.user.UserResVo;
-import wxs.common.util.RedisHelper;
 import wxs.common.response.AppResult;
 import wxs.common.response.Result;
-import wxs.oauth.util.TokenUtil;
+import wxs.common.util.RedisHelper;
+import wxs.admin.util.TokenUtil;
+import wxs.common.vo.UserLoginResVo;
+import wxs.oauth.interceptor.SessionInterceptor;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,6 @@ public class LoginControler {
 
     @Autowired
     private RedisHelper redisHelper;
-
     /**
      * token过期时间
      */
@@ -52,13 +54,13 @@ public class LoginControler {
 
     @RequestMapping(value="/login.do")
     @ResponseBody
-    public AppResult loginDo(UserReqVo user , HttpServletRequest request, BindingResult bindingResult) {
+    public AppResult loginDo(@Valid UserReqVo user , HttpServletRequest request, BindingResult bindingResult) {
+        log.info("进入登录...........................");
         if (!bindingResult.hasErrors()) {//表示验证通过
-            UserResVo users = userService.getUserByNameAndPwd(user);
+            UserLoginResVo users = userService.getUserByNameAndPwd(user);
             if (users!=null && users.getAccount().equals(user.getAccount())) {
                 if (users.getPassword().equals(user.getPassword())) {
                     JSONObject JSON=new JSONObject();
-                    if("0".equals(user.getUserType())){
                         //先添加到session
                         // request.getSession().setAttribute("user", users);
                         // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
@@ -76,7 +78,6 @@ public class LoginControler {
                         JSON.put("token",token);
                         //这里将菜单列表组装成树
                         JSON.put("menuList",menuTree(menuList));
-                    }
                  return Result.success(JSON);
                 }
                 return Result.failed("密码错误");
@@ -86,11 +87,6 @@ public class LoginControler {
             return Result.failed(bindingResult.getFieldError().getDefaultMessage());
         }
     }
-    @RequestMapping(value="/login")
-    @ResponseBody
-    public AppResult loginDo() { return Result.failed( "测试");
-    }
-
     /**
      * 组装菜单树
      */

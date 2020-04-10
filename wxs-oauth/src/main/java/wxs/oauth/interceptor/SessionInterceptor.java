@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import wxs.common.util.RedisHelper;
-import wxs.admin.vo.user.UserResVo;
+import wxs.common.vo.UserLoginResVo;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -26,7 +28,6 @@ public class SessionInterceptor  implements HandlerInterceptor {
     @Autowired
     private RedisHelper redisHelper;
 
-
     /**
      * 存放所有登录用户
      * key :userId+sessionId
@@ -43,7 +44,6 @@ public class SessionInterceptor  implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Object) throws Exception {
-
         String token=request.getHeader("token");
         log.info("正在访问的url:{}",request.getRequestURL());
         log.info("token为:{}",token);
@@ -64,7 +64,7 @@ public class SessionInterceptor  implements HandlerInterceptor {
         // request.getSession().getAttribute("token");
         //权限路径拦截
         //UserResVo user=(UserResVo) request.getSession().getAttribute("user");
-        UserResVo user = (UserResVo)redisHelper.get(token);
+        UserLoginResVo user = (UserLoginResVo) redisHelper.get(token);
         if(null != user) {
             String sessionId = request.getSession().getId();
             //if(sessionId != null && sessionId.equals(optionMap.get(user.getId().toString()))) {  //如果该用户对应的session和当前sessionid一致，则放行

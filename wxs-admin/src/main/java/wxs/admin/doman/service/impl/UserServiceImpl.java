@@ -13,6 +13,7 @@ import wxs.admin.doman.po.UserPo;
 import wxs.admin.doman.service.UserService;
 import wxs.admin.vo.user.UserReqVo;
 import wxs.admin.vo.user.UserResVo;
+import wxs.common.vo.UserLoginResVo;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
     private UserMapper userMapper;
 
     @Override
-    public UserResVo getUserByNameAndPwd(UserReqVo user) {
+    public UserLoginResVo getUserByNameAndPwd(UserReqVo user) {
         return userMapper.getUserByNameAndPwd(user);
     }
 

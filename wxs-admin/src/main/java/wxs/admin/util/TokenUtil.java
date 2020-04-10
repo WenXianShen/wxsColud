@@ -1,4 +1,4 @@
-package wxs.oauth.util;
+package wxs.admin.util;
 
 import sun.misc.BASE64Encoder;
 
