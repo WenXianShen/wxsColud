@@ -16,11 +16,17 @@ public class MenuReqVo extends BasePagerVo {
     private String lvl;
 
     // 路径
-    private String menuPath;
+    private String routerPath;
 
     // 父菜单ID
     private Long parentId;
 
     // 显示顺序
     private Long displaySeq;
+
+    //是否显示
+    private  String isHidden;
+
+    //菜单icon
+    private  String type;
 }

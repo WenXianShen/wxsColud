@@ -10,7 +10,6 @@ import wxs.common.com.BaseVo;
  * @date : 2020/1/3
  */
 @Data
-@AllArgsConstructor
 @TableName("t_role_menu")
 public class RoleMenuPo extends BaseVo {
     // 角色id

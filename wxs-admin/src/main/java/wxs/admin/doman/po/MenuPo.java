@@ -10,7 +10,6 @@ import wxs.common.com.BaseVo;
  * @date : 2020/1/3
  */
 @Data
-@AllArgsConstructor
 @TableName("t_menu")
 public class MenuPo extends BaseVo {
     // 菜单名称

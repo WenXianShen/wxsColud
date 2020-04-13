@@ -10,7 +10,6 @@ import wxs.common.com.BaseVo;
  * @date : 2020/1/3
  */
 @Data
-@AllArgsConstructor
 @TableName("t_user_role")
 public class UserRolePo extends BaseVo {
     // 用户id

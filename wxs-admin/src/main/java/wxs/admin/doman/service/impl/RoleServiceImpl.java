@@ -21,7 +21,9 @@ public class RoleServiceImpl  extends ServiceImpl<RoleMapper, RolePo> implements
 
     @Override
     public PageInfo getRoleListByVo(RoleReqVo roleReqVo) {
-        PageHelper.startPage(roleReqVo.getPager().getCurrentPage(),roleReqVo.getPager().getPagesize());
+        if (roleReqVo.getPager().getCurrentPage() > 0 && roleReqVo.getPager().getPagesize() > 0) {
+            PageHelper.startPage(roleReqVo.getPager().getCurrentPage(),roleReqVo.getPager().getPagesize());
+        }
         List<RoleResVo> roleList = roleMapper.getRoleList(roleReqVo);
         PageInfo pageInfo = new PageInfo(roleList);
         return pageInfo;

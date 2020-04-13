@@ -18,6 +18,28 @@
         <if test="menuName != null ">
             and menu.menu_name like concat(#{menuName},'%')
         </if>
+        <if test="lvl != null and lvl !=''">
+            and menu.lvl = #{lvl}
+        </if>
+        <if test="parentId != null and parentId !=''">
+            and menu.parent_id = #{parentId}
+        </if>
         order by menu.create_time,menu.display_seq
     </select>
+
+    <select id="getMenuByMenuId" resultType="wxs.admin.vo.menu.MenuResVo" parameterType="String">
+       SELECT menu.id,menu.menu_name ,menu.lvl,
+       menu.parent_id ,menu.display_seq,menu.router_path,type,is_hidden
+       FROM `t_menu` menu
+       where menu.is_deleted = 2 and menu.id=#{id}
+    </select>
+
+    <update id="deleteMenuByIds"  parameterType="java.util.List">
+                update  t_menu
+                set is_deleted = 0
+                where id in
+                <foreach collection="list" open="(" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+    </update>
 </mapper>

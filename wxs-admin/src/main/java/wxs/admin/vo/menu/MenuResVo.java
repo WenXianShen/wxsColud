@@ -11,12 +11,14 @@ import java.util.List;
 public class MenuResVo extends BaseVo {
     // 菜单名称
     private String name;
-
+    private String menuName;
     // 菜单级别
     private String lvl;
 
     // 路径
     private String text;
+    //路由名称
+    private  String routerPath;
 
 
 
@@ -28,6 +30,7 @@ public class MenuResVo extends BaseVo {
     private Long displaySeq;
     //是否显示
     private  String isHidden;
+
 
     //菜单icon
     private  String type;
@@ -117,5 +120,19 @@ public class MenuResVo extends BaseVo {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
+    }
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+    public String getRouterPath() {
+        return routerPath;
+    }
+
+    public void setRouterPath(String routerPath) {
+        this.routerPath = routerPath;
     }
 }
