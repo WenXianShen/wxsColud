@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxs.admin.doman.dao.RoleMenuMapper">
+    <update id="deleteRoleMenuByRoles"  parameterType="java.util.List">
+        update  t_role_menu
+        set is_deleted = 0
+        where role_id = #{roleId}
+    </update>
+    <insert id="saveRoleMenuList" parameterType="java.util.List">
+        INSERT INTO `t_role_menu` (`role_id`, `menu_id`, `is_deleted`, `version`)
+        VALUES
+        <foreach collection="list" item="item"  separator="," >
+            (#{item.roleId}, #{item.menuId}, '2', '0')
+        </foreach>
+    </insert>
+
+</mapper>

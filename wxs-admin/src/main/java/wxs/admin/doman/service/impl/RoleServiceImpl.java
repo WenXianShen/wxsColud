@@ -2,14 +2,17 @@ package wxs.admin.doman.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wxs.admin.doman.po.RolePo;
 import wxs.admin.vo.role.RoleReqVo;
 import wxs.admin.doman.dao.RoleMapper;
 import wxs.admin.doman.service.RoleService;
 import wxs.admin.vo.role.RoleResVo;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,5 +30,27 @@ public class RoleServiceImpl  extends ServiceImpl<RoleMapper, RolePo> implements
         List<RoleResVo> roleList = roleMapper.getRoleList(roleReqVo);
         PageInfo pageInfo = new PageInfo(roleList);
         return pageInfo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveRole(RoleReqVo roleReqVo) {
+        RolePo rolePo = new RolePo();
+        BeanUtils.copyProperties(roleReqVo,rolePo);
+        roleMapper.insert(rolePo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateRole(RoleReqVo roleReqVo) {
+        RolePo rolePo = new RolePo();
+        BeanUtils.copyProperties(roleReqVo,rolePo);
+        rolePo.setUpdateTime(new Date());
+        roleMapper.updateById(rolePo);
+    }
+
+    @Override
+    public RoleResVo getRoleInfoByRoleId(String roleId) {
+        return roleMapper.getRoleInfoByRoleId(roleId);
     }
 }

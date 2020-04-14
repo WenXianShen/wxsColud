@@ -23,4 +23,5 @@ public interface MenuMapper  extends BaseMapper<MenuPo> {
     public List<MenuResVo> getMenuList(MenuReqVo vo);
     public  MenuResVo getMenuByMenuId(@Param("id") String menuId);
     public  void deleteMenuByIds(List<String> ids);
+    public  List<MenuResVo> getMenuListByRoleId(@Param("roleId") String menuId);
 }

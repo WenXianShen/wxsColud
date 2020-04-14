@@ -6,13 +6,13 @@
                 t4.parent_id ,t4.display_seq,t4.is_deleted,t4.type,t4.is_hidden
         from  t_user_role t1
 		INNER JOIN t_role t2 on  t1.role_id = t2.id  AND t2.is_deleted = 2
-        INNER join t_role_menu t3 on t3.role_id = t2.id
+        INNER join t_role_menu t3 on t3.role_id = t2.id and t3.is_deleted =2
         INNER JOIN t_menu t4 ON t4.id = t3.menu_id AND t4.is_deleted = 2
         where t1.user_id = #{id}
     </select>
 
     <select id="getMenuList" resultType="wxs.admin.vo.menu.MenuResVo" parameterType="wxs.admin.vo.user.UserReqVo">
-        SELECT menu.id,menu.menu_name name,menu.lvl,menu2.menu_name parentName,menu.display_seq,menu.router_path text  FROM `t_menu` menu
+        SELECT menu.id,menu.menu_name name,menu.lvl,menu2.menu_name parentName,menu.display_seq,menu.router_path text,menu.parent_id  FROM `t_menu` menu
         left join `t_menu` menu2 on menu.parent_id = menu2.id
         where menu.is_deleted = 2
         <if test="menuName != null ">
@@ -32,6 +32,15 @@
        menu.parent_id ,menu.display_seq,menu.router_path,type,is_hidden
        FROM `t_menu` menu
        where menu.is_deleted = 2 and menu.id=#{id}
+    </select>
+    <select id="getMenuListByRoleId" resultType="wxs.admin.vo.menu.MenuResVo" parameterType="String">
+       SELECT  DISTINCT t4.id,t4.lvl,t4.menu_name text,t4.router_path  name,
+                t4.parent_id ,t4.display_seq,t4.is_deleted,t4.type,t4.is_hidden
+		FROM t_role t2
+        INNER join t_role_menu t3 on t3.role_id = t2.id and t3.is_deleted =2
+        INNER JOIN t_menu t4 ON t4.id = t3.menu_id AND t4.is_deleted = 2
+        where t2.id=#{roleId} and t2.is_deleted = 2
+
     </select>
 
     <update id="deleteMenuByIds"  parameterType="java.util.List">

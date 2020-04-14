@@ -66,7 +66,7 @@ public class LoginControler {
                         // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
                         String token=TokenUtil.getToken().makeToken();
                         redisHelper.set(token,users,time);
-                        redisHelper.set(users.getId().toString(),token,time);
+                        redisHelper.set(users.getId().toString(),token);
                         //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
                         JSON.put("user",users);
                         UserReqVo reqVo = new UserReqVo();
@@ -77,7 +77,7 @@ public class LoginControler {
                        JSON.put("menuList",JSONObject.parseArray(json));*/
                         JSON.put("token",token);
                         //这里将菜单列表组装成树
-                        JSON.put("menuList",menuTree(menuList));
+                        JSON.put("menuList",menuService.menuTree(menuList));
                  return Result.success(JSON);
                 }
                 return Result.failed("密码错误");
@@ -87,54 +87,5 @@ public class LoginControler {
             return Result.failed(bindingResult.getFieldError().getDefaultMessage());
         }
     }
-    /**
-     * 组装菜单树
-     */
-    public   List<MenuResVo> menuTree(List<MenuResVo> menuList){
 
-        List<MenuResVo> newMenuList = new ArrayList<MenuResVo>();
-        menuList.forEach(dx ->{
-            //先拿到一级菜单
-            if (null == dx.getParentId()) {
-                newMenuList.add(dx);
-            }
-        });
-        //为一级菜单设置子菜单,getChild是递归调用的
-        newMenuList.forEach(dx ->{
-            dx.setChildren(getChild(dx.getId(),menuList));
-        });
-        return newMenuList;
-    }
-
-    /**
-     * 递归查找子菜单
-     *
-     * @param id
-     *            当前菜单id
-     * @param rootMenu
-     *            要查找的列表
-     * @return
-     */
-    private List<MenuResVo> getChild(Long id, List<MenuResVo> rootMenu) {
-        List<MenuResVo>childList = new ArrayList<MenuResVo>();
-        /**
-         * 遍历所有节点，将父节点Id与之比较
-         */
-        rootMenu.forEach(dx -> {
-            if( null != dx.getParentId() && dx.getParentId().equals(id)){
-                childList.add(dx);
-            }
-        });
-       /* *//**
-         * 子节点再次循环
-         *//*
-        childList.forEach(dx -> {
-           getChild(dx.getId(),rootMenu);
-        });*/
-        //结束递归的条件
-        if(childList.size() == 0){
-            return  null;
-        }
-        return childList;
-    }
 }

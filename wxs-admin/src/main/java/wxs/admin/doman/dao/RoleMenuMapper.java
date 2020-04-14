@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import wxs.admin.doman.po.RoleMenuPo;
 import wxs.admin.doman.po.RolePo;
 import wxs.admin.vo.role.RoleReqVo;
 import wxs.admin.vo.role.RoleResVo;
-
 
 import java.util.List;
 
@@ -17,8 +17,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface RoleMapper extends BaseMapper<RolePo> {
-    public List<RoleResVo> getRoleList(RoleReqVo vo);
-
-    public RoleResVo getRoleInfoByRoleId(@Param("roleId") String roleId);
+public interface RoleMenuMapper {
+    public void deleteRoleMenuByRoles(@Param("roleId") String roleId);
+    public void saveRoleMenuList(List<RoleMenuPo>roleMenuPoList);
 }

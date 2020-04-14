@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import wxs.admin.vo.menu.MenuReqVo;
+import wxs.admin.vo.menu.MenuResVo;
 import wxs.common.response.AppResult;
 import wxs.common.response.Result;
 
 import wxs.admin.doman.service.MenuService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author : imperater
@@ -83,8 +86,8 @@ public class MenuController {
     @ResponseBody
     public AppResult deleteMenu(@RequestBody String ids){
         try {
-            List<String> idList = JSON.parseArray(ids,String.class);
-            menuService.deleteMenu(idList);
+            List<String> ideList = JSON.parseArray(ids, String.class);
+            menuService.deleteMenu(ideList);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("批量删除菜单时报错:{}",e.getMessage());
@@ -102,4 +105,41 @@ public class MenuController {
     public AppResult getMenuInfoByMenuId(String id){
         return Result.success(menuService.getMenuInfoByMenuId(id));
     }
+
+    /**
+     * 分配菜单(获取全部菜单tree，以及选中角色所对应的菜单列表)
+     */
+    @RequestMapping("/getMenuTreeByRoleId")
+    @ResponseBody
+    public AppResult getMenuTreeByRoleId(String roleId){
+        JSONObject jsonObject = new JSONObject();
+        // 这里获取全部的菜单tree
+        PageInfo menuList = menuService.getMenuList(null);
+        List<MenuResVo> allMenulist = menuService.menuTree(menuList.getList());
+        //获取用户所对应的菜单
+        List<MenuResVo> roleMenuList = menuService.getMenuListByRoleId(roleId);
+        jsonObject.put("menuTree",allMenulist);
+        //将除一级目录全部筛选出来
+        List<MenuResVo> allMenuList =  menuList.getList();
+        allMenuList = allMenuList.stream().filter(m -> !m.getLvl().equals("0")).collect(Collectors.toList());
+        jsonObject.put("allMenuList",allMenuList);
+        jsonObject.put("roleMenuList",roleMenuList);
+        return Result.success(jsonObject);
+    }
+
+    /**
+     * 给角色分配菜单
+     */
+    @RequestMapping("/updateRoleMenuListByRoleId")
+    @ResponseBody
+    public AppResult updateRoleMenuListByRoleId(@RequestBody  MenuReqVo menuReqVo){
+        try {
+           menuService.updateRoleMenuList(menuReqVo);
+        }catch (Exception e){
+            log.error("给roleId为{}的角色分配菜单时报错:{}",menuReqVo.getId(),menuReqVo.getMenuList().toString());
+            return Result.failed("保存失败!");
+        }
+        return Result.success("保存成功!");
+    }
+
 }

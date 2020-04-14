@@ -3,6 +3,8 @@ package wxs.admin.vo.menu;
 import lombok.Data;
 import wxs.common.com.BasePagerVo;
 
+import java.util.List;
+
 /**
  * @author : imperater
  * @date : 2020/1/16
@@ -29,4 +31,6 @@ public class MenuReqVo extends BasePagerVo {
 
     //菜单icon
     private  String type;
+
+    private List<String>  menuList;
 }

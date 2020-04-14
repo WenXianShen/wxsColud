@@ -31,6 +31,6 @@ public class BaseVo implements java.io.Serializable {
      * 乐观锁版本字段
      * author:guyifeng
      */
-    private Long version;
+    private Long version = 0L;
 
 }

@@ -3,6 +3,15 @@
 <mapper namespace="wxs.admin.doman.dao.RoleMapper">
     <select id="getRoleList" resultType="wxs.admin.vo.role.RoleResVo" parameterType="wxs.admin.vo.role.RoleReqVo">
                 SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
+                where is_deleted = 2
+                <if test="roleName != null and roleName !=''">
+                    AND role_name  like concat(#{roleName},'%')
+                </if>
+    </select>
+
+    <select id="getRoleInfoByRoleId" resultType="wxs.admin.vo.role.RoleResVo" parameterType="String">
+        SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
+        where 1=1 and role.id = #{roleId}
     </select>
 
 </mapper>

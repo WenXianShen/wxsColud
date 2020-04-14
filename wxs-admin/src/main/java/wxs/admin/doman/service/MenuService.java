@@ -1,6 +1,7 @@
 package wxs.admin.doman.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import wxs.admin.doman.po.MenuPo;
 import wxs.admin.vo.menu.MenuReqVo;
 import wxs.admin.vo.menu.MenuResVo;
@@ -20,4 +21,12 @@ public interface MenuService   extends IService<MenuPo> {
     public  void updateMenu(MenuReqVo menuReqVo);
     public  void deleteMenu(List<String> ids);
     public  MenuResVo getMenuInfoByMenuId(String menuId);
+    /**
+     * 组织菜单树
+     * @param menuList
+     * @return
+     */
+    public   List<MenuResVo> menuTree(List<MenuResVo> menuList);
+    public  List<MenuResVo> getMenuListByRoleId( String roleId);
+    public  void updateRoleMenuList( MenuReqVo menuReqVo);
 }
