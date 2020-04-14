@@ -121,7 +121,7 @@ public class MenuController {
         jsonObject.put("menuTree",allMenulist);
         //将除一级目录全部筛选出来
         List<MenuResVo> allMenuList =  menuList.getList();
-        allMenuList = allMenuList.stream().filter(m -> !m.getLvl().equals("0")).collect(Collectors.toList());
+        allMenuList = allMenuList.stream().filter(m ->  !m.getLvl().equals("0")).collect(Collectors.toList());
         jsonObject.put("allMenuList",allMenuList);
         jsonObject.put("roleMenuList",roleMenuList);
         return Result.success(jsonObject);
