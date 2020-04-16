@@ -15,6 +15,7 @@ import wxs.admin.vo.user.UserReqVo;
 import wxs.admin.vo.user.UserResVo;
 import wxs.common.vo.UserLoginResVo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,7 +54,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements 
     public void updateUser(UserReqVo userReqVo) {
         UserPo userPo = new UserPo();
         BeanUtils.copyProperties(userReqVo,userPo);
+        userPo.setUpdateTime(new Date());
         //执行修改
         this.updateById(userPo);
     }
+
+    @Override
+    public UserResVo getUserInfoById(String userId) {
+        UserResVo userResVo = new UserResVo();
+        UserPo userPo = this.selectById(userId);
+        BeanUtils.copyProperties(userPo,userResVo);
+        return userResVo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUser(String userId) {
+        this.deleteById(Long.valueOf(userId));
+    }
+
 }

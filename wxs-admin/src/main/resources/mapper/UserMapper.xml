@@ -3,15 +3,15 @@
 <mapper namespace="wxs.admin.doman.dao.UserMapper">
     <select id="getUserByNameAndPwd"
             resultType="wxs.common.vo.UserLoginResVo" parameterType="wxs.admin.vo.user.UserReqVo">
-      SELECT id,user_account account,passwd password,user_name_zh name,gender,user_type
+      SELECT id,user_account account, password,user_name_zh name,gender,user_type
       FROM `t_user`
       where user_account = #{account}  and user_type = #{userType} and is_deleted=2
     </select>
 
     <select id="getUserListByVo"
             resultType="wxs.admin.vo.user.UserResVo" parameterType="wxs.admin.vo.user.UserReqVo">
-      SELECT id,user_account account,passwd password,user_name_zh name,
-             gender,image_url ,telephone ,gender,mobile,mail,address
+      SELECT id,user_account account,password,user_name_zh name,
+             gender,image_url ,telephone ,gender,mail,address,is_deleted
       FROM `t_user` where  user_type = #{userType}
       <if test="name != null ">
         AND user_name_zh  like concat(#{name},'%')

@@ -16,5 +16,7 @@ public interface UserService extends IService<UserPo> {
     public PageInfo getUserListByVo(UserReqVo user);
     public  void saveUser(UserReqVo userReqVo);
     public  void updateUser(UserReqVo userReqVo);
+    public UserResVo getUserInfoById(String userId);
+    public  void deleteUser(String userId);
 
 }

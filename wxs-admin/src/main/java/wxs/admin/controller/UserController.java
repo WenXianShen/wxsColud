@@ -35,7 +35,6 @@ public class UserController {
         return Result.success(jsonObject);
     }
 
-
     //新增用户
     @RequestMapping(value="/insertUser")
     @ResponseBody
@@ -43,6 +42,7 @@ public class UserController {
         try{
             userService.saveUser(userVo);
         }catch (Exception e){
+            e.printStackTrace();
             return Result.failed("添加失败");
         }
         return Result.success("添加成功");
@@ -56,8 +56,29 @@ public class UserController {
         try{
             userService.updateUser(userVo);
         }catch (Exception e){
+            e.printStackTrace();
             return Result.failed("修改失败");
         }
         return Result.success("修改成功");
     }
+
+    @RequestMapping(value="/getUserInfoById")
+    @ResponseBody
+    public AppResult getUserInfoById(@RequestBody String userId){
+        return Result.success(userService.getUserInfoById(userId));
+    }
+
+    @RequestMapping(value="/deleteUser")
+    @ResponseBody
+    public AppResult deleteUser(@RequestBody String userId){
+        try{
+            userService.deleteUser(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failed("删除失败");
+        }
+        return Result.success("删除成功");
+    }
+
+
 }

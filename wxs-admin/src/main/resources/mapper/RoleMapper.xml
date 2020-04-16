@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="wxs.admin.doman.dao.RoleMapper">
     <select id="getRoleList" resultType="wxs.admin.vo.role.RoleResVo" parameterType="wxs.admin.vo.role.RoleReqVo">
-                SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
+                SELECT role.id,role.role_name,role_type,role.description,role.is_deleted FROM `t_role` role
                 where 1 = 1
                 <if test="roleName != null and roleName !=''">
                     AND role_name  like concat(#{roleName},'%')
@@ -10,8 +10,16 @@
     </select>
 
     <select id="getRoleInfoByRoleId" resultType="wxs.admin.vo.role.RoleResVo" parameterType="String">
-        SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
-        where 1=1 and role.id = #{roleId}
+            SELECT role.id,role.role_name,role_type,role.description FROM `t_role` role
+            where 1=1 and role.id = #{roleId}
     </select>
-
+    <select id="getUserRoleByUserId" resultType="wxs.admin.vo.role.RoleResVo" parameterType="String">
+            SELECT
+                r.id,
+                r.role_name
+            FROM
+                t_role r
+            INNER JOIN t_user_role ur ON r.id = ur.role_id and ur.is_deleted=2
+            WHERE ur.user_id= #{userId}
+    </select>
 </mapper>

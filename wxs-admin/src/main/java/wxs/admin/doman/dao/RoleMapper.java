@@ -21,4 +21,6 @@ public interface RoleMapper extends BaseMapper<RolePo> {
     public List<RoleResVo> getRoleList(RoleReqVo vo);
 
     public RoleResVo getRoleInfoByRoleId(@Param("roleId") String roleId);
+    public List<RoleResVo> getUserRoleByUserId(@Param("userId") String userId);
+
 }

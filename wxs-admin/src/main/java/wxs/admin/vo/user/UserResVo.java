@@ -20,8 +20,10 @@ public class UserResVo extends BasePagerVo {
         private String mobile;
         private String mail;
         private String status;
-        private Date birthday;
-        private String idcard;
         private String address;
         private String userType;
+        private String userAccount;
+        private String userNameZh;
+        private Long roleId;
+        private String roleName;
 }

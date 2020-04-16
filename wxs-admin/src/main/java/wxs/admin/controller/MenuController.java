@@ -17,6 +17,7 @@ import wxs.common.response.Result;
 
 import wxs.admin.doman.service.MenuService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -86,6 +87,7 @@ public class MenuController {
     @ResponseBody
     public AppResult deleteMenu(@RequestBody String ids){
         try {
+            System.out.println(ids);
             List<String> ideList = JSON.parseArray(ids, String.class);
             menuService.deleteMenu(ideList);
         } catch (Exception e) {
@@ -115,13 +117,17 @@ public class MenuController {
         JSONObject jsonObject = new JSONObject();
         // 这里获取全部的菜单tree
         PageInfo menuList = menuService.getMenuList(null);
-        List<MenuResVo> allMenulist = menuService.menuTree(menuList.getList());
+        List<MenuResVo> menuTree = menuService.menuTree(menuList.getList());
         //获取用户所对应的菜单
         List<MenuResVo> roleMenuList = menuService.getMenuListByRoleId(roleId);
-        jsonObject.put("menuTree",allMenulist);
-        //将除一级目录全部筛选出来
+        jsonObject.put("menuTree",menuTree);
+        /**
+         * 这里由于前端控件展示问题，需将父级菜单的id移除掉，因为父级菜单id选择则默认代表他下面的所有子级菜单选择
+         *还有一种情况就是，父级菜单下没有子级菜单，不需要移除
+         */
         List<MenuResVo> allMenuList =  menuList.getList();
-        allMenuList = allMenuList.stream().filter(m ->  !m.getLvl().equals("0")).collect(Collectors.toList());
+         allMenuList  =  allMenuList.stream().filter(m -> null ==  m.getChildren()).collect(Collectors.toList());
+
         jsonObject.put("allMenuList",allMenuList);
         jsonObject.put("roleMenuList",roleMenuList);
         return Result.success(jsonObject);
@@ -134,8 +140,9 @@ public class MenuController {
     @ResponseBody
     public AppResult updateRoleMenuListByRoleId(@RequestBody  MenuReqVo menuReqVo){
         try {
-           menuService.updateRoleMenuList(menuReqVo);
+            menuService.updateRoleMenuList(menuReqVo);
         }catch (Exception e){
+            e.printStackTrace();
             log.error("给roleId为{}的角色分配菜单时报错:{}",menuReqVo.getId(),menuReqVo.getMenuList().toString());
             return Result.failed("保存失败!");
         }

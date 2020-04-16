@@ -5,6 +5,7 @@ import wxs.common.com.BasePagerVo;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : imperater
@@ -24,7 +25,9 @@ public class UserReqVo extends BasePagerVo {
     private String mobile;
     private String mail;
     private String status;
-    private Date birthday;
     private String idcard;
     private String address;
+    private String userAccount;
+    private String userNameZh;
+    private List<String> roleIds;
 }

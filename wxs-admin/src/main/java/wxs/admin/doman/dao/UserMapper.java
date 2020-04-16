@@ -2,6 +2,7 @@ package wxs.admin.doman.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import wxs.admin.doman.po.UserPo;
 import wxs.admin.vo.user.UserReqVo;
