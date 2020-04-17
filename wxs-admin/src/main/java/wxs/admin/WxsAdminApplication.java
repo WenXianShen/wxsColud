@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages ="wxs")
 @SpringBootApplication
-/*
 public class WxsAdminApplication {
 
     public static void main(String[] args) {
@@ -17,7 +16,8 @@ public class WxsAdminApplication {
     }
 
 }
-*/
+
+/*
 public class WxsAdminApplication  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -29,3 +29,4 @@ public class WxsAdminApplication  extends SpringBootServletInitializer {
         return application.sources(WxsAdminApplication.class);
     }
 }
+*/

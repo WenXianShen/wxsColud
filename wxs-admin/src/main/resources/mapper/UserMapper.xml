@@ -5,7 +5,7 @@
             resultType="wxs.common.vo.UserLoginResVo" parameterType="wxs.admin.vo.user.UserReqVo">
       SELECT id,user_account account, password,user_name_zh name,gender,user_type
       FROM `t_user`
-      where user_account = #{account}  and user_type = #{userType} and is_deleted=2
+      where user_account = #{account}  and password =#{password}  and user_type = #{userType} and is_deleted=2
     </select>
 
     <select id="getUserListByVo"

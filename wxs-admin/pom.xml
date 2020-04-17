@@ -12,7 +12,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>wxs-admin</name>
     <description>wxs.admin</description>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +26,7 @@
             <artifactId>wxs-oauth</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+      <!--  <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
@@ -36,7 +36,7 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

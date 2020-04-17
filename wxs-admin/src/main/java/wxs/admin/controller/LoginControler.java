@@ -57,26 +57,15 @@ public class LoginControler {
     public AppResult loginDo(@Valid UserReqVo user , HttpServletRequest request, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {//表示验证通过
             UserLoginResVo users = userService.getUserByNameAndPwd(user);
-            if (users!=null && users.getAccount().equals(user.getAccount())) {
-                if (users.getPassword().equals(user.getPassword())) {
+            if (users!=null) {
                     JSONObject JSON=new JSONObject();
                         //先添加到session
                         // request.getSession().setAttribute("user", users);
                         // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
-                        String token = "";  //令牌
-                        String  userToken = (String) redisHelper.get(users.getId().toString());
-                        /**  这里有两种情况:初次登陆和二次登陆(也就是令牌未过期的时候再次登陆)
-                         * 初次登陆后，会生成令牌
-                         * 二次登陆，会将之前用户生成的令牌续命
-                         */
-                        if (null != userToken && userToken != ""){
-                            token = userToken;
-                            redisHelper.set(token,users,time);
-                        } else {
-                            token = TokenUtil.getToken().makeToken();
-                            redisHelper.set(token,users,time);
-                            redisHelper.set(users.getId().toString(),token);
-                        }
+                        String token = TokenUtil.getToken().makeToken();;  //令牌
+
+                        redisHelper.set(token,users,time);
+                        redisHelper.set(users.getId().toString(),token);
                         //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
                         JSON.put("user",users);
                         UserReqVo reqVo = new UserReqVo();
@@ -90,9 +79,8 @@ public class LoginControler {
                         JSON.put("menuList",menuService.menuTree(menuList));
                  return Result.success(JSON);
                 }
-                return Result.failed("密码错误");
-            }
-            return Result.failed( "账号不存在");
+
+            return Result.failed( "用户名或密码错误");
         }else {
             return Result.failed(bindingResult.getFieldError().getDefaultMessage());
         }
