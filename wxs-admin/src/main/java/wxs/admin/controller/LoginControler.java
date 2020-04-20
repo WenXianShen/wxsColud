@@ -60,14 +60,9 @@ public class LoginControler {
             UserLoginResVo users = userService.getUserByNameAndPwd(user);
             if (users!=null) {
                     JSONObject JSON=new JSONObject();
-                        //先添加到session
-                        // request.getSession().setAttribute("user", users);
-                        // request.getSession().setAttribute("token", TokenUtil.getToken().makeToken());
                         String token = TokenUtil.getToken().makeToken();;  //令牌
-
                         redisHelper.set(token,users,time);
                         redisHelper.set(users.getId().toString(),token);
-                        //SessionInterceptor.optionMap.put(users.getId().toString(), request.getRequestedSessionId());
                         JSON.put("user",users);
                         UserReqVo reqVo = new UserReqVo();
                         reqVo.setId(users.getId());
@@ -80,7 +75,6 @@ public class LoginControler {
                         JSON.put("menuList",menuService.menuTree(menuList));
                  return Result.success(JSON);
                 }
-
             return Result.failed( "用户名或密码错误");
         }else {
             return Result.failed(bindingResult.getFieldError().getDefaultMessage());
