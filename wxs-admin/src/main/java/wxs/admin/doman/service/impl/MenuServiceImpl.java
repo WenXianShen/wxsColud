@@ -104,8 +104,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuPo> implements 
 
     /**
      * 给角色分配菜单
-     * @param id
-     * @param menus
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

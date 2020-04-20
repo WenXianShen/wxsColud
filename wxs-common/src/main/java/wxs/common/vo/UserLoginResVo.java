@@ -19,10 +19,7 @@ public class UserLoginResVo extends BasePo {
     private String  imageUrl;
     private String gender;
     private String telephone;
-    private String mobile;
     private String mail;
     private String status;
-    private Date birthday;
-    private String idcard;
     private String address;
 }

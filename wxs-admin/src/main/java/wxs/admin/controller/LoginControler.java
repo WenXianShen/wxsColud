@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import wxs.admin.doman.service.MenuService;
@@ -66,7 +67,7 @@ public class LoginControler {
 
                         redisHelper.set(token,users,time);
                         redisHelper.set(users.getId().toString(),token);
-                        //SessionInterceptor.optionMap.put(users.getId().toString(), request.getSession().getId());
+                        //SessionInterceptor.optionMap.put(users.getId().toString(), request.getRequestedSessionId());
                         JSON.put("user",users);
                         UserReqVo reqVo = new UserReqVo();
                         reqVo.setId(users.getId());
@@ -85,5 +86,25 @@ public class LoginControler {
             return Result.failed(bindingResult.getFieldError().getDefaultMessage());
         }
     }
+
+    /**
+     * 退出登录
+     * @param user
+     * @return
+     */
+    @RequestMapping(value="/loginOut.do")
+    @ResponseBody
+    public AppResult loginOut(@RequestBody UserReqVo user) {
+        try{
+            String userToken = (String) redisHelper.get(user.getId().toString());
+            redisHelper.del(userToken);
+            redisHelper.del(user.getId().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            return  Result.success( "退出失败!");
+        }
+        return  Result.success( "退出成功!");
+    }
+
 
 }

@@ -44,6 +44,7 @@ public class SessionInterceptor  implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Object) throws Exception {
+
         String token=request.getHeader("token");
         log.info("正在访问的url:{}",request.getRequestURL());
         log.info("token为:{}",token);
@@ -66,13 +67,14 @@ public class SessionInterceptor  implements HandlerInterceptor {
         //UserResVo user=(UserResVo) request.getSession().getAttribute("user");
         UserLoginResVo user = (UserLoginResVo) redisHelper.get(token);
         if(null != user) {
-            String sessionId = request.getSession().getId();
+            String oldToken = (String) redisHelper.get(user.getId().toString());
+            //String sessionId = request.getRequestedSessionId();
             //if(sessionId != null && sessionId.equals(optionMap.get(user.getId().toString()))) {  //如果该用户对应的session和当前sessionid一致，则放行
-            if(token != null && token.equals(redisHelper.get(user.getId().toString()))) {
+            if(token != null && token.equals(oldToken)) {
                return true;
             } else {
             //页面提示登录失效或您的账号已在其它地点登录
-                log.info(" "+user.getId()+" 被强制挤下线,sessionId为:"+sessionId);
+                log.info("用户编号为:{}被强制挤下线,sesionId为:{}",user.getId(),request.getRequestedSessionId());;
                 ((HttpServletResponse) response).setHeader("content-type", "text/html;charset=UTF-8");
               //  request.getSession().removeAttribute("user");
                 redisHelper.del(token);
