@@ -44,7 +44,6 @@ public class SessionInterceptor  implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Object) throws Exception {
-        System.out.println(request.getRequestedSessionId());
         String token=request.getHeader("token");
         log.info("正在访问的url:{}",request.getRequestURL());
         log.info("token为:{}",token);
