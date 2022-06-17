@@ -30,7 +30,7 @@
     <docker.host>http://47.92.195.102:2375</docker.host>
     <docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
     <spring-boot-maven-plugin.version>2.1.5.RELEASE</spring-boot-maven-plugin.version>
-    <fastjson.version>1.2.58</fastjson.version>
+    <fastjson.version>1.2.83</fastjson.version>
   </properties>
 
   <dependencies>
